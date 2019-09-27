@@ -1,50 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`;
-
-export const Header = styled.div`
-  height: 50px;
-  padding-bottom: 10px;
-  color: #b34e7e;
-
-  FontAwesomeIcon {
-    font-size: lg;
-  }
-
-  span {
-    font-size: 25px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-left: 10px;
-  }
-`;
-
-export const Field = styled.div`
-  display: flex;
-  width: 80%;
-  height: 500px;
-  max-width: 500px;
-  border-color: #b34e7e;
-  border-style: dashed;
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-
-  span {
-    font-size: 22px;
-    height: 20px;
-    color: #b34e7e;
-    font-weight: bold;
-  }
+  min-height: 100vh;
 `;
 
 export const Button = styled.button`
@@ -57,6 +18,6 @@ export const Button = styled.button`
   font-weight: bold;
   background: #b34e7e;
   color: rgb(230, 230, 230);
-  font-size: 12px;
+  font-size: 18px;
   cursor: pointer;
 `;

@@ -8,14 +8,14 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing:border-box;
     outline:0;
-    height: 100%;
   }
 
   body {
     background-color: #ffffff;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height:100vh
   }
 `;
 
