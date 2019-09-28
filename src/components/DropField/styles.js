@@ -1,7 +1,16 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const ContainerIframe = styled.div`
+  width: 100%;
+  height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +41,7 @@ export const Button = styled.button`
   flex: 1;
   width: 80%;
   /* max-width: 500px; */
-  height: 50%;
+  height: 55px;
   margin-top: 5px;
   border: 3px solid #b34e7e;
   border-radius: 5px;

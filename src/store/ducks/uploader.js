@@ -10,11 +10,8 @@ export const Types = {
 
 const INITIAL_STATE = {
   loading: false,
-  loaded: false,
-  // loadedFile: null,
-  urlLoadedFile: null,
-  signedDocument: null,
-  signedDocumentUrl: null,
+  uploaded: false,
+  loadedFile: null,
   error: null,
 };
 
@@ -27,8 +24,8 @@ export default function uploader(state = INITIAL_STATE, action) {
       };
     case Types.LOAD_FILE_SUCCESS:
       return {
-        loaded: true,
-        urlLoadedFile: action.payload.data,
+        uploaded: true,
+        loadedFile: action.payload.data,
         loading: false,
         error: null,
       };
@@ -47,15 +44,13 @@ export default function uploader(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
-        urlLoadedFile: action.payload.data,
+        loadedFile: action.payload.data,
       };
     case Types.SIGN_DOCUMENT_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-        signedDocument: null,
-        signedDocumentUrl: null,
       };
     // case Types.REMOVE:
     //   return {

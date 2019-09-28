@@ -1,13 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import Dropzone from "react-dropzone";
+import Dropzone from 'react-dropzone';
 
-import { Creators as UploaderActions } from "../../store/ducks/uploader";
-import { Creators as ModalActions } from "../../store/ducks/modal";
-import { Container, Field, Button } from "./styles";
+import { Creators as UploaderActions } from '../../store/ducks/uploader';
+import { Creators as ModalActions } from '../../store/ducks/modal';
+import {
+ Container, Field, Button, ContainerIframe 
+} from './styles';
 
 class DropField extends Component {
   onDrop = async (accepted, rejected) => {
@@ -21,10 +23,10 @@ class DropField extends Component {
   };
 
   render() {
-    const { urlLoadedFile, loaded, modalVisible } = this.props;
+    const { loadedFile, uploaded, modalVisible } = this.props;
     return (
       <Container>
-        {!urlLoadedFile ? (
+        {!loadedFile ? (
           <Dropzone
             onDrop={(accepted, rejected) => this.onDrop(accepted, rejected)}
             multiple={false}
@@ -38,15 +40,17 @@ class DropField extends Component {
             )}
           </Dropzone>
         ) : (
-          <iframe
-            disabled={modalVisible}
-            title="viewer"
-            src={urlLoadedFile}
-            width="80%"
-            height="500px"
-          />
+          <ContainerIframe>
+            <iframe
+              disabled={modalVisible}
+              title="viewer"
+              src={loadedFile}
+              width="80%"
+              height="80%"
+            />
+          </ContainerIframe>
         )}
-        {!!loaded && (
+        {!!uploaded && (
           <Button onClick={() => this.openModal()}>Assinar documento</Button>
         )}
       </Container>
@@ -54,17 +58,16 @@ class DropField extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loading: state.uploader.loading,
-  urlLoadedFile: state.uploader.urlLoadedFile,
-  loaded: state.uploader.loaded,
-  modalVisible: state.modal.visible
+  loadedFile: state.uploader.loadedFile,
+  uploaded: state.uploader.uploaded,
+  modalVisible: state.modal.visible,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...UploaderActions, ...ModalActions }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ ...UploaderActions, ...ModalActions }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(DropField);
