@@ -21,28 +21,17 @@ export const ButtonsContainer = styled.div`
   height: 20%;
   width: 100%;
   justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export const Button = styled.button`
-  flex: 1;
+  /* flex: 1; */
   width: 100%;
+  /* flex-grow: 1; */
   /* max-width: 500px; */
-  height: 50%;
-  margin-top: 5px;
-  border: 3px solid #b34e7e;
-  border-radius: 5px;
-  font-weight: bold;
-  background: #b34e7e;
-  color: rgb(230, 230, 230);
-  font-size: 18px;
-  cursor: pointer;
-`;
-
-export const CancelButton = styled.button`
-  flex: 0.5;
-  width: 50%;
-  /* max-width: 500px; */
-  height: 50%;
+  height: 50px;
   margin-top: 5px;
   border: 3px solid #b34e7e;
   border-radius: 5px;

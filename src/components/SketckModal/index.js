@@ -9,11 +9,7 @@ import { Creators as ModalActions } from '../../store/ducks/modal';
 import { Creators as UploaderActions } from '../../store/ducks/uploader';
 
 import {
-  Container,
-  DrawContainer,
-  ButtonsContainer,
-  Button,
-  CancelButton,
+ Container, DrawContainer, ButtonsContainer, Button 
 } from './styles';
 
 Modal.setAppElement(document.getElementById('root'));
@@ -55,12 +51,8 @@ class SketckModal extends Component {
           </DrawContainer>
           <ButtonsContainer>
             <Button onClick={() => this.signDocument()}>Assinar</Button>
-            <CancelButton onClick={() => this.handleHideModal()}>
-              Cancelar
-            </CancelButton>
-            <CancelButton onClick={() => this.clearSketck()}>
-              Limpar
-            </CancelButton>
+            <Button onClick={() => this.clearSketck()}>Limpar</Button>
+            <Button onClick={() => this.handleHideModal()}>Cancelar</Button>
           </ButtonsContainer>
         </Container>
       </Modal>

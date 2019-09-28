@@ -5,6 +5,7 @@ export const Types = {
   SIGN_DOCUMENT_REQUEST: 'uploader/SIGN_DOCUMENT_REQUEST',
   SIGN_DOCUMENT_SUCCESS: 'uploader/SIGN_DOCUMENT_SUCCESS',
   SIGN_DOCUMENT_FAILURE: 'uploader/SIGN_DOCUMENT_FAILURE',
+  CLEAN_FIELDS: 'uploader/CLEAN_FIELDS',
   // REMOVE: 'uploader/REMOVE',
 };
 
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
   loading: false,
   uploaded: false,
   loadedFile: null,
+  signed: false,
   error: null,
 };
 
@@ -44,6 +46,7 @@ export default function uploader(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
+        signed: true,
         loadedFile: action.payload.data,
       };
     case Types.SIGN_DOCUMENT_FAILURE:
@@ -52,11 +55,15 @@ export default function uploader(state = INITIAL_STATE, action) {
         loading: false,
         error: action.payload.error,
       };
-    // case Types.REMOVE:
-    //   return {
-    //     ...state,
-    //     data: state.data.filter((user) => user.id !== action.payload.user.id),
-    //   };
+    case Types.CLEAN_FIELDS:
+      return {
+        ...state,
+        loading: false,
+        uploaded: false,
+        loadedFile: null,
+        signed: false,
+        error: null,
+      };
     default:
       return state;
   }
@@ -90,8 +97,7 @@ export const Creators = {
     type: Types.SIGN_DOCUMENT_FAILURE,
     payload: { error },
   }),
-  removeUser: (user) => ({
-    type: Types.REMOVE,
-    payload: { user },
+  cleanFields: () => ({
+    type: Types.CLEAN_FIELDS,
   }),
 };

@@ -22,8 +22,15 @@ class DropField extends Component {
     showModal();
   };
 
+  cleanFields = () => {
+    const { cleanFields } = this.props;
+    cleanFields();
+  };
+
   render() {
-    const { loadedFile, uploaded, modalVisible } = this.props;
+    const {
+ loadedFile, uploaded, modalVisible, signed 
+} = this.props;
     return (
       <Container>
         {!loadedFile ? (
@@ -50,8 +57,13 @@ class DropField extends Component {
             />
           </ContainerIframe>
         )}
-        {!!uploaded && (
+        {!!uploaded && !signed && (
           <Button onClick={() => this.openModal()}>Assinar documento</Button>
+        )}
+        {signed && (
+          <Button onClick={() => this.cleanFields()}>
+            Carregar outro documento
+          </Button>
         )}
       </Container>
     );
@@ -62,6 +74,7 @@ const mapStateToProps = (state) => ({
   loading: state.uploader.loading,
   loadedFile: state.uploader.loadedFile,
   uploaded: state.uploader.uploaded,
+  signed: state.uploader.signed,
   modalVisible: state.modal.visible,
 });
 
