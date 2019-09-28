@@ -6,7 +6,6 @@ export const Types = {
   SIGN_DOCUMENT_SUCCESS: 'uploader/SIGN_DOCUMENT_SUCCESS',
   SIGN_DOCUMENT_FAILURE: 'uploader/SIGN_DOCUMENT_FAILURE',
   CLEAN_FIELDS: 'uploader/CLEAN_FIELDS',
-  // REMOVE: 'uploader/REMOVE',
 };
 
 const INITIAL_STATE = {
