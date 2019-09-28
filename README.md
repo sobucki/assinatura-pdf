@@ -8,8 +8,16 @@ Para baixar o projeto em sua máquina utilize o comando
 Para iniciar o projeto utilize o comando:
 
 > `git clone https://github.com/sobucki/assinatura-pdf.git`
-> ou baixe Download Zip
+> ou baixe o Download Zip
 > https://github.com/sobucki/assinatura-pdf/archive/master.zip
+
+## Configuração
+
+Após baixado execute o abaixo na raiz do projeto para baixar todas as dependências:
+
+> yarn
+> ou
+> npm
 
 ## Execução
 

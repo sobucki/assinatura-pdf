@@ -25,6 +25,7 @@ export function* loadFile(action) {
       yield put(UploaderActions.loadFileSuccess(base64));
     }
   } catch (err) {
+    console.log(err);
     yield put(UploaderActions.loadFileFailure(err));
     toast.error('Ocorreu um erro durante o carregamento!', {
       position: toast.POSITION.TOP_CENTER,

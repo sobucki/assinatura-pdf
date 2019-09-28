@@ -57,13 +57,13 @@ class DropField extends Component {
             />
           </ContainerIframe>
         )}
-        {!!uploaded && !signed && (
-          <Button onClick={() => this.openModal()}>Assinar documento</Button>
-        )}
-        {signed && (
-          <Button onClick={() => this.cleanFields()}>
-            Carregar outro documento
-          </Button>
+        {!!uploaded && (
+          <>
+            <Button onClick={() => this.openModal()}>Assinar documento</Button>
+            <Button onClick={() => this.cleanFields()}>
+              Carregar outro documento
+            </Button>
+          </>
         )}
       </Container>
     );
