@@ -7,7 +7,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "babel-eslint": "^10.0.3",
-    "circular-json": "^0.5.9",
     "font-awesome": "^4.7.0",
     "pdf-lib": "^1.1.1",
     "prop-types": "^15.7.2",
