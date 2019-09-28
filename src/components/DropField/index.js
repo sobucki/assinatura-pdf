@@ -21,8 +21,7 @@ class DropField extends Component {
   };
 
   render() {
-    const { urlLoadedFile, loading, loaded } = this.props;
-    console.log(urlLoadedFile);
+    const { urlLoadedFile, loaded } = this.props;
     return (
       <Container>
         {!urlLoadedFile ? (

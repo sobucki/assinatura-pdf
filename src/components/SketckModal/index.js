@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 
-import Modal from 'react-modal';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import Modal from 'react-modal';
 import { SketchField, Tools } from 'react-sketch';
+import { Creators as ModalActions } from '../../store/ducks/modal';
+import { Creators as UploaderActions } from '../../store/ducks/uploader';
 
 import {
   Container,
@@ -12,14 +16,28 @@ import {
   CancelButton,
 } from './styles';
 
-export default class SketckModal extends Component {
-  handleHideModal = () => {};
+Modal.setAppElement(document.getElementById('root'));
+
+class SketckModal extends Component {
+  handleHideModal = () => {
+    const { hideModal } = this.props;
+    hideModal();
+  };
+
+  signDocument = () => {
+    const { signDocumentRequest } = this.props;
+    signDocumentRequest(this.sketckRef.toDataURL());
+  };
+
+  clearSketck = () => {
+    this.sketckRef.clear();
+  };
 
   render() {
-    const isOpenFlag = false;
+    const { visible } = this.props;
     return (
       <Modal
-        isOpen={isOpenFlag}
+        isOpen={visible}
         onRequestClose={this.handleHideModal}
         contentLabel="Field to assing"
       >
@@ -27,7 +45,7 @@ export default class SketckModal extends Component {
           <span>Faça sua assinatura na caixa abaixo:</span>
           <DrawContainer>
             <SketchField
-              ref={(c) => (this._sketch = c)}
+              ref={(c) => (this.sketckRef = c)}
               width="100%"
               height="100%"
               tool={Tools.Pencil}
@@ -36,12 +54,27 @@ export default class SketckModal extends Component {
             />
           </DrawContainer>
           <ButtonsContainer>
-            <Button>Assinar</Button>
-            <CancelButton>Cancelar</CancelButton>
-            <CancelButton>Limpar</CancelButton>
+            <Button onClick={() => this.signDocument()}>Assinar</Button>
+            <CancelButton onClick={() => this.handleHideModal()}>
+              Cancelar
+            </CancelButton>
+            <CancelButton onClick={() => this.clearSketck()}>
+              Limpar
+            </CancelButton>
           </ButtonsContainer>
         </Container>
       </Modal>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  visible: state.modal.visible,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ ...ModalActions, ...UploaderActions }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SketckModal);

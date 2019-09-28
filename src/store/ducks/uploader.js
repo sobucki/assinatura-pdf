@@ -2,6 +2,9 @@ export const Types = {
   LOAD_FILE_REQUEST: 'uploader/LOAD_FILE_REQUEST',
   LOAD_FILE_SUCCESS: 'uploader/LOAD_FILE_SUCCESS',
   LOAD_FILE_FAILURE: 'uploader/LOAD_FILE_FAILURE',
+  SIGN_DOCUMENT_REQUEST: 'uploader/SIGN_DOCUMENT_REQUEST',
+  SIGN_DOCUMENT_SUCCESS: 'uploader/SIGN_DOCUMENT_SUCCESS',
+  SIGN_DOCUMENT_FAILURE: 'uploader/SIGN_DOCUMENT_FAILURE',
   // REMOVE: 'uploader/REMOVE',
 };
 
@@ -10,6 +13,8 @@ const INITIAL_STATE = {
   loaded: false,
   loadedFile: null,
   urlLoadedFile: null,
+  signedDocument: null,
+  signedDocumentUrl: null,
   error: null,
 };
 
@@ -25,7 +30,7 @@ export default function uploader(state = INITIAL_STATE, action) {
         loaded: true,
         loadedFile: action.payload.data,
         urlLoadedFile: action.payload.urlFile,
-        loading: true,
+        loading: false,
         error: null,
       };
     case Types.LOAD_FILE_FAILURE:
@@ -34,6 +39,26 @@ export default function uploader(state = INITIAL_STATE, action) {
         loading: false,
         error: action.payload.error,
         loadedFile: null,
+      };
+    case Types.SIGN_DOCUMENT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case Types.SIGN_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        signedDocument: action.payload.signedDocument,
+        signedDocumentUrl: action.payload.signedDocumentUrl,
+      };
+    case Types.SIGN_DOCUMENT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        signedDocument: null,
+        signedDocumentUrl: null,
       };
     // case Types.REMOVE:
     //   return {
@@ -58,6 +83,19 @@ export const Creators = {
 
   loadFileFailure: (error) => ({
     type: Types.LOAD_FILE_FAILURE,
+    payload: { error },
+  }),
+
+  signDocumentRequest: (dataUrl) => ({
+    type: Types.SIGN_DOCUMENT_REQUEST,
+    payload: { dataUrl },
+  }),
+  signDocumentSuccess: (signedDocument, urlFile) => ({
+    type: Types.SIGN_DOCUMENT_SUCCESS,
+    payload: { signedDocument, urlFile },
+  }),
+  signDocumentFailure: (error) => ({
+    type: Types.SIGN_DOCUMENT_FAILURE,
     payload: { error },
   }),
   removeUser: (user) => ({

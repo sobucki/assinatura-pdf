@@ -1,25 +1,14 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
 
-import { PDFDocument } from 'pdf-lib';
-// import api from '../../services/api';
+import { loadPDF, writeInPDF } from '../../services/pdfHandle';
 
 import { Creators as UploaderActions } from '../ducks/uploader';
 // import { Creators as ModalActions } from '../ducks/modal';
 
-function convertToURL(file) {
-  return URL.createObjectURL(file);
-}
-
-async function convertToByteArray(url) {
-  const arrayBuffer = await fetch(url).then((res) => res.arrayBuffer());
-  return arrayBuffer;
-}
-
 export function* loadFile(action) {
   try {
-    // const { data } = yield call(api.get, `/users/${action.payload.user}`);
     const { accepted, rejected } = action.payload;
 
     if (Object.keys(rejected).length !== 0) {
@@ -31,19 +20,8 @@ export function* loadFile(action) {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      const urlFile = convertToURL(accepted[0]);
-      const bytesFile = yield call(convertToByteArray, urlFile);
-      const pdfLoaded = yield call(PDFDocument.load, bytesFile);
-
-      yield put(UploaderActions.loadFileSuccess(pdfLoaded, urlFile));
-
-      //* ******************* */
-      // const pdfBytes = await pdfDoc.save();
-
-      // const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      // const pdfUrl = URL.createObjectURL(blob);
-      // // window.open(pdfUrl, '_blank');
-      // this.setState({ downloadLink: pdfUrl });
+      const { url, pdfDocument } = yield call(loadPDF, accepted[0]);
+      yield put(UploaderActions.loadFileSuccess(pdfDocument, url));
     }
   } catch (err) {
     yield put(UploaderActions.loadFileFailure(err));
@@ -54,4 +32,12 @@ export function* loadFile(action) {
   } finally {
     // yield put(ModalActions.hideModal());
   }
+}
+
+export function* signDocument(action) {
+  const pdfLoaded = yield select((state) => state.uploader.loadedFile);
+
+  const { dataUrl } = action.payload;
+
+  yield call(writeInPDF, pdfLoaded, dataUrl);
 }
