@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import Dropzone from 'react-dropzone';
+import Dropzone from "react-dropzone";
 
-import { Creators as UploaderActions } from '../../store/ducks/uploader';
-import { Creators as ModalActions } from '../../store/ducks/modal';
-import { Container, Field, Button } from './styles';
+import { Creators as UploaderActions } from "../../store/ducks/uploader";
+import { Creators as ModalActions } from "../../store/ducks/modal";
+import { Container, Field, Button } from "./styles";
 
 class DropField extends Component {
   onDrop = async (accepted, rejected) => {
@@ -21,7 +21,7 @@ class DropField extends Component {
   };
 
   render() {
-    const { urlLoadedFile, loaded } = this.props;
+    const { urlLoadedFile, loaded, modalVisible } = this.props;
     return (
       <Container>
         {!urlLoadedFile ? (
@@ -38,17 +38,13 @@ class DropField extends Component {
             )}
           </Dropzone>
         ) : (
-          <object
-            data={urlLoadedFile}
-            type="application/pdf"
+          <iframe
+            disabled={modalVisible}
+            title="viewer"
+            src={urlLoadedFile}
             width="80%"
             height="500px"
-          >
-            <p>
-              Seu navegador não suporta PDF.
-              <a href={urlLoadedFile}>Baixar arquivo</a>
-            </p>
-          </object>
+          />
         )}
         {!!loaded && (
           <Button onClick={() => this.openModal()}>Assinar documento</Button>
@@ -58,15 +54,17 @@ class DropField extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loading: state.uploader.loading,
   urlLoadedFile: state.uploader.urlLoadedFile,
   loaded: state.uploader.loaded,
+  modalVisible: state.modal.visible
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ ...UploaderActions, ...ModalActions }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...UploaderActions, ...ModalActions }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(DropField);

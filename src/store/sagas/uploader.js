@@ -20,24 +20,27 @@ export function* loadFile(action) {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      const { url, pdfDocument } = yield call(loadPDF, accepted[0]);
-      yield put(UploaderActions.loadFileSuccess(pdfDocument, url));
+      const base64 = yield call(loadPDF, accepted[0]);
+      // const ret = yield call(loadPDF, accepted[0]);
+
+      yield put(UploaderActions.loadFileSuccess(base64));
     }
   } catch (err) {
     yield put(UploaderActions.loadFileFailure(err));
     toast.error('Ocorreu um erro durante o carregamento!', {
       position: toast.POSITION.TOP_CENTER,
     });
-    console.error(err);
+    console.log(err);
   } finally {
     // yield put(ModalActions.hideModal());
   }
 }
 
 export function* signDocument(action) {
-  const pdfLoaded = yield select((state) => state.uploader.loadedFile);
-
+  const base64Loaded = yield select((state) => state.uploader.urlLoadedFile);
   const { dataUrl } = action.payload;
 
-  yield call(writeInPDF, pdfLoaded, dataUrl);
+  const writed = yield call(writeInPDF, base64Loaded, dataUrl);
+  // window.open(teste, "_blank");
+  yield put(UploaderActions.signDocumentSuccess(writed));
 }

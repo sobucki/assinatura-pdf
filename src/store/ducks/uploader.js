@@ -11,7 +11,7 @@ export const Types = {
 const INITIAL_STATE = {
   loading: false,
   loaded: false,
-  loadedFile: null,
+  // loadedFile: null,
   urlLoadedFile: null,
   signedDocument: null,
   signedDocumentUrl: null,
@@ -28,8 +28,7 @@ export default function uploader(state = INITIAL_STATE, action) {
     case Types.LOAD_FILE_SUCCESS:
       return {
         loaded: true,
-        loadedFile: action.payload.data,
-        urlLoadedFile: action.payload.urlFile,
+        urlLoadedFile: action.payload.data,
         loading: false,
         error: null,
       };
@@ -38,7 +37,6 @@ export default function uploader(state = INITIAL_STATE, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        loadedFile: null,
       };
     case Types.SIGN_DOCUMENT_REQUEST:
       return {
@@ -49,8 +47,7 @@ export default function uploader(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
-        signedDocument: action.payload.signedDocument,
-        signedDocumentUrl: action.payload.signedDocumentUrl,
+        urlLoadedFile: action.payload.data,
       };
     case Types.SIGN_DOCUMENT_FAILURE:
       return {
@@ -76,9 +73,9 @@ export const Creators = {
     payload: { accepted, rejected },
   }),
 
-  loadFileSuccess: (data, urlFile) => ({
+  loadFileSuccess: (data) => ({
     type: Types.LOAD_FILE_SUCCESS,
-    payload: { data, urlFile },
+    payload: { data },
   }),
 
   loadFileFailure: (error) => ({
@@ -90,9 +87,9 @@ export const Creators = {
     type: Types.SIGN_DOCUMENT_REQUEST,
     payload: { dataUrl },
   }),
-  signDocumentSuccess: (signedDocument, urlFile) => ({
+  signDocumentSuccess: (data) => ({
     type: Types.SIGN_DOCUMENT_SUCCESS,
-    payload: { signedDocument, urlFile },
+    payload: { data },
   }),
   signDocumentFailure: (error) => ({
     type: Types.SIGN_DOCUMENT_FAILURE,
